@@ -9,7 +9,7 @@ class TripSorter {
     public function sort($boardingCards)
     {
         foreach($boardingCards as $boardingCard) {
-            $this->cards[$boardingCard['from']] = $boardingCard;
+            $this->cards[$boardingCard->getFrom()] = $boardingCard;
         }
         return $this->_sort($this->cards);
     }
@@ -20,7 +20,7 @@ class TripSorter {
         $sorted = [$firstTrip];
         for($i = 0; $i < count($boardingCards); $i++) {
             $last = $sorted[$i];
-            $nextTrip = $this->findNextTrip($boardingCards, $last['to']);
+            $nextTrip = $this->findNextTrip($boardingCards, $last->getTo());
             if($nextTrip) {
                 $sorted[] = $nextTrip;
             }
@@ -34,8 +34,8 @@ class TripSorter {
         $from = [];
         $to = [];
         foreach($boardingCards as $boardingCard) {
-            $from[] = $boardingCard['from'];
-            $to[] = $boardingCard['to'];
+            $from[] = $boardingCard->getFrom();
+            $to[] = $boardingCard->getTo();
         }
 
         $first = array_diff($from, $to);

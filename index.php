@@ -17,20 +17,21 @@ function autoload($className)
 spl_autoload_register('autoload');
 
 
+$cardBuilder = new App\Card\CardBuilder();
 $boardingCards = [
-    [
+    $cardBuilder->fromArray([
         'transport_type' => 'train',
         'number' => '78A',
         'from' => 'Madrid',
         'to' => 'Barcelona',
         'seat' => '45B'
-    ],
-    [
+    ]),
+    $cardBuilder->fromArray([
         'transport_type' => 'airport bus',
         'from' => 'Barcelona',
         'to' => 'Gerona Airport'
-    ],
-    [
+    ]),
+    $cardBuilder->fromArray([
         'transport_type' => 'flight',
         'number' => 'SK455',
         'from' => 'Gerona Airport',
@@ -38,8 +39,8 @@ $boardingCards = [
         'gate' => '45B',
         'seat' => '3A',
         'baggage' => 'drop at ticket counter 344'
-    ],
-    [
+    ]),
+    $cardBuilder->fromArray([
         'transport_type' => 'flight',
         'number' => 'SK22',
         'from' => 'Stockholm',
@@ -47,7 +48,7 @@ $boardingCards = [
         'gate' => '22',
         'seat' => '7B',
         'baggage' =>  'will we automatically transferred from your last leg'
-    ] 
+    ])
 ];
 
 shuffle($boardingCards);
@@ -55,5 +56,8 @@ shuffle($boardingCards);
 $tripSorter = new App\TripSorter();
 $sorted = $tripSorter->sort($boardingCards);
 var_dump($sorted);
-$formatter = new App\Formatter\Formatter();
-var_dump($formatter->render($sorted));
+$formatter = new App\Card\Formatter();
+$formatted = $formatter->render($sorted);
+var_dump($formatted);
+
+ 
